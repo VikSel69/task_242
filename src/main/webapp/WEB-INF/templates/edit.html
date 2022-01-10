@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Mentor</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">JM Spring Security</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a type="button" th:href="@{/}" class="btn btn-outline-light">Home</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="first_name">First name</label>
+                <input class="form-control" type="text" id="first_name" th:field="*{firstName}">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="last_name">First name</label>
+                <input class="form-control" type="text" id="last_name" th:field="*{lastName}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="e_mail">First name</label>
+                <input class="form-control" type="text" id="e_mail" th:field="*{email}">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="password">First name</label>
+                <input class="form-control" type="password" id="password" th:field="*{password}">
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-md-6 mb-3">
+                <label for="roles">Roles</label>
+                <div id="roles">
+                    <div class="form-check form-check-inline" th:each="role : ${allRoles}">
+                        <label class="form-check-label" th:for="${role.role}" th:text="${role.role}"></label>
+                        <input class="form-check-input" type="checkbox" name="roles" th:checked="${user.hasRole('${role.role}')}" th:id="${role.role}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="roles">&nbsp;</label>
+                <div id="enabled_row">
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="enabled">Is enabled</label>
+                        <input class="form-check-input" type="checkbox" name="roles" th:checked="*{isEnabled()}" id="enabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-start align-items-center form-row">
+            <div class="mr-3">
+                <button class="btn btn-secondary" type="submit" th:text="Edit"></button>
+                <a class="btn btn-light border-dark" href="/admin">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
