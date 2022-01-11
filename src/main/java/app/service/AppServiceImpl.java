@@ -34,20 +34,17 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User findUser(Long userId) {
         return userRepository.find(userId)
         .orElseThrow(() -> new EmptyResultDataAccessException(String.format("User with ID = %d not found", userId), 1));
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.find(email);
         if (null == user) {
@@ -57,7 +54,6 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    @Transactional
     public void deleteUser(Long userId) {
         Optional<User> user = userRepository.find(userId);
         if (user.isPresent()) {
@@ -70,13 +66,11 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Role> findAllRoles() {
         return roleRepository.findAll();
     }
 
     @Override
-    @Transactional
     public void tryIndex(Model model, HttpSession session, LoginException authenticationException, String authenticationName) {
         if (authenticationException != null) {
             try {
@@ -100,7 +94,6 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    @Transactional
     public boolean saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
@@ -108,7 +101,17 @@ public class AppServiceImpl implements AppService {
         } catch (PersistenceException e) {
             return false;
         }
+        return true;
+    }
 
+    @Override
+    public boolean updateUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        try {
+            userRepository.update(user);
+        } catch (PersistenceException e) {
+            return false;
+        }
         return true;
     }
 }

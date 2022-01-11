@@ -12,7 +12,9 @@ public interface UserRepository {
 
     User find(String email);
 
-    void save(User entity);
+    void save(User user);
 
-    void delete(User entity);
+    void update(User user);
+
+    void delete(User user);
 }

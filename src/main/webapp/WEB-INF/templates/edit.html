@@ -22,24 +22,24 @@
     </div>
 </nav>
 <div class="container">
-    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+    <form th:method="POST" th:action="@{/admin/edit}" th:object="${user}">
         <div class="form-row">
             <div class="col-md-6 mb-3">
                 <label for="first_name">First name</label>
                 <input class="form-control" type="text" id="first_name" th:field="*{firstName}">
             </div>
             <div class="col-md-6 mb-3">
-                <label for="last_name">First name</label>
+                <label for="last_name">Last name</label>
                 <input class="form-control" type="text" id="last_name" th:field="*{lastName}">
             </div>
         </div>
         <div class="form-row">
             <div class="col-md-6 mb-3">
-                <label for="e_mail">First name</label>
+                <label for="e_mail">Email</label>
                 <input class="form-control" type="text" id="e_mail" th:field="*{email}">
             </div>
             <div class="col-md-6 mb-3">
-                <label for="password">First name</label>
+                <label for="password">Password</label>
                 <input class="form-control" type="password" id="password" th:field="*{password}">
             </div>
         </div>
@@ -47,18 +47,22 @@
             <div class="col-md-6 mb-3">
                 <label for="roles">Roles</label>
                 <div id="roles">
-                    <div class="form-check form-check-inline" th:each="role : ${allRoles}">
-                        <label class="form-check-label" th:for="${role.role}" th:text="${role.role}"></label>
-                        <input class="form-check-input" type="checkbox" name="roles" th:checked="${user.hasRole('${role.role}')}" th:id="${role.role}">
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="admin_checkbox" text="ROLE_ADMIN"></label>
+                        <input class="form-check-input" type="checkbox" name="checkbox_admin" th:checked="${user.hasRole('ROLE_ADMIN')}" id="admin_checkbox" value="true">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="user_checkbox" text="ROLE_USER"></label>
+                        <input class="form-check-input" type="checkbox" name="checkbox_user" th:checked="${user.hasRole('ROLE_USER')}" id="user_checkbox" value="true">
                     </div>
                 </div>
             </div>
             <div class="col-md-6 mb-3">
-                <label for="roles">&nbsp;</label>
+                <label for="enabled_row">Enabled</label>
                 <div id="enabled_row">
                     <div class="form-check form-check-inline">
                         <label class="form-check-label" for="enabled">Is enabled</label>
-                        <input class="form-check-input" type="checkbox" name="roles" th:checked="*{isEnabled()}" id="enabled">
+                        <input class="form-check-input" type="checkbox" name="checkbox_enabled" th:checked="*{isEnabled()}" id="enabled">
                     </div>
                 </div>
             </div>
