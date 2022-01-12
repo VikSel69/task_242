@@ -71,6 +71,11 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
+    public Role findRoleByRole(String role) {
+        return roleRepository.findRoleByRole(role);
+    }
+
+    @Override
     public void tryIndex(Model model, HttpSession session, LoginException authenticationException, String authenticationName) {
         if (authenticationException != null) {
             try {

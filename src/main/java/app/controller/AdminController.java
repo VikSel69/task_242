@@ -46,4 +46,10 @@ public class AdminController {
         return appService.updateUser(user) ? "redirect:/admin" : "/home";
     }
 
+    @GetMapping("/{id}/delete")
+    public String deleteUser(@PathVariable("id") Long userId) {
+        appService.deleteUser(userId);
+        return "redirect:/admin";
+    }
+
 }

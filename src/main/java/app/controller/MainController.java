@@ -36,9 +36,11 @@ public class MainController {
     @PostMapping("/new")
     public String getUserPage(@ModelAttribute("user") User user) {
         Set<Role> roles = new HashSet<>();
-        roles.add(new Role("ROLE_USER"));
+//        roles.add(new Role("ROLE_USER"));
+        roles.add(appService.findRoleByRole("ROLE_USER"));
         user.setEnabled(true);
         user.setRoles(roles);
+        System.out.println(user);
         return appService.saveUser(user) ? "redirect:/user" : "/new";
     }
 }

@@ -18,6 +18,8 @@ public interface AppService extends UserDetailsService {
 
     List<Role> findAllRoles();
 
+    Role findRoleByRole(String role);
+
     void tryIndex(Model model, HttpSession session, LoginException authenticationException, String authenticationName);
 
     boolean saveUser(User user);

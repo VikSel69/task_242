@@ -20,10 +20,10 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public Role findRoleByAuthority(String authority) throws NoSuchElementException {
+    public Role findRoleByRole(String role) throws NoSuchElementException {
         return findAll().stream()
-                .filter(r -> authority.equals(r.getAuthority()))
+                .filter(r -> role.equals(r.getAuthority()))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format("Role %s not found", authority)));
+                .orElseThrow(() -> new NoSuchElementException(String.format("Role %s not found", role)));
     }
 }
