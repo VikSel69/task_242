@@ -18,6 +18,4 @@ public interface AppService extends UserDetailsService {
     Role findRoleByRole(String role);
 
     boolean saveUser(User user);
-
-    boolean updateUser(User user);
 }

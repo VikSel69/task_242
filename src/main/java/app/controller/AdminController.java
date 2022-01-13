@@ -36,18 +36,6 @@ public class AdminController {
         return "edit";
     }
 
-    @PostMapping("/new")
-    public String getUserPage(@ModelAttribute("user") User user, @RequestParam(defaultValue = "false") boolean checkbox_admin,
-                              @RequestParam(defaultValue = "false") boolean checkbox_user, @RequestParam(defaultValue = "false") boolean checkbox_enabled) {
-        Set<Role> roles = new HashSet<>();
-        if (checkbox_admin) roles.add(appService.findRoleByRole("ROLE_ADMIN"));
-        if (checkbox_user) roles.add(appService.findRoleByRole("ROLE_USER"));
-        user.setEnabled(checkbox_enabled);
-        user.setRoles(roles);
-        System.out.println(user);
-        return appService.saveUser(user) ? "redirect:/admin" : "edit";
-    }
-
     @GetMapping("/{id}/edit")
     public String editUserPage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", appService.findUser(id));
@@ -62,7 +50,8 @@ public class AdminController {
         if (checkbox_user) roles.add(appService.findRoleByRole("ROLE_USER"));
         user.setEnabled(checkbox_enabled);
         user.setRoles(roles);
-        return appService.updateUser(user) ? "redirect:/admin" : "edit";
+        System.out.println(user);
+        return appService.saveUser(user) ? "redirect:/admin" : "edit";
     }
 
     @GetMapping("/{id}/delete")
