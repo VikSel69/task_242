@@ -16,7 +16,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a type="button" th:href="@{/}" class="btn btn-outline-light">Home</a></li></ul>
+                <li class="nav-item"><a class="btn btn-outline-light" type="button" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="btn btn-outline-light" type="button" th:href="@{/admin/new}">New</a></li>
+                <li class="nav-item"><a class="btn btn-outline-light" type="button" th:href="@{/logout}">Logout</a></li>
+            </ul>
         </div>
     </div>
 </nav>
@@ -24,14 +27,12 @@
     <div  class="row">
         <div class="col text-center">
             <h1 class="mt-5">JM Spring Security</h1>
-            <p class="lead">Edit user</p>
+            <p class="lead">Create user</p>
         </div>
     </div>
 </div>
 <div class="container">
-    <form th:method="POST" th:action="@{/admin/{id}/edit(id=${user.getId()})}" th:object="${user}">
-        <label for="user_id">Id</label>
-        <input type="text" id="user_id" th:field="*{id}">
+    <form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
         <div class="form-row">
             <div class="col-md-6 mb-3">
                 <label for="first_name">First name</label>
@@ -78,7 +79,7 @@
         </div>
         <div class="d-flex justify-content-start align-items-center form-row">
             <div class="mr-3">
-                <button class="btn btn-secondary" type="submit" th:text="Edit"></button>
+                <button class="btn btn-secondary" type="submit" th:text="Creat"></button>
                 <a class="btn btn-light border-dark" href="/admin">Cancel</a>
             </div>
         </div>

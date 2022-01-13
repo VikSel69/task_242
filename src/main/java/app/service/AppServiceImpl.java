@@ -76,9 +76,19 @@ public class AppServiceImpl implements AppService {
     public boolean saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
-            if (user.getId() != null) {
-            userRepository.save(user);
-            } else userRepository.update(user);
+//            userRepository.save(user);
+            userRepository.update(user);
+        } catch (PersistenceException e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        try {
+            userRepository.update(user);
         } catch (PersistenceException e) {
             return false;
         }

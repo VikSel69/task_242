@@ -33,17 +33,11 @@ public class AdminController {
     @GetMapping("/new")
     public String getNewUserPage(Model model) {
         model.addAttribute("user", new User());
-        return "edit";
+        return "new";
     }
 
-    @GetMapping("/{id}/edit")
-    public String editUserPage(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", appService.findUser(id));
-        return "edit";
-    }
-
-    @PostMapping("/edit")
-    public String updateUser(@ModelAttribute("user") User user, @RequestParam(defaultValue = "false") boolean checkbox_admin,
+    @PostMapping("/new")
+    public String createUser(@ModelAttribute("user") User user, @RequestParam(defaultValue = "false") boolean checkbox_admin,
                              @RequestParam(defaultValue = "false") boolean checkbox_user, @RequestParam(defaultValue = "false") boolean checkbox_enabled) {
         Set<Role> roles = new HashSet<>();
         if (checkbox_admin) roles.add(appService.findRoleByRole("ROLE_ADMIN"));
@@ -52,6 +46,25 @@ public class AdminController {
         user.setRoles(roles);
         System.out.println(user);
         return appService.saveUser(user) ? "redirect:/admin" : "edit";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editUserPage(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", appService.findUser(id));
+        return "edit";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id, @RequestParam(defaultValue = "false") boolean checkbox_admin,
+                             @RequestParam(defaultValue = "false") boolean checkbox_user, @RequestParam(defaultValue = "false") boolean checkbox_enabled) {
+        Set<Role> roles = new HashSet<>();
+        if (checkbox_admin) roles.add(appService.findRoleByRole("ROLE_ADMIN"));
+        if (checkbox_user) roles.add(appService.findRoleByRole("ROLE_USER"));
+        user.setId(id);
+        user.setEnabled(checkbox_enabled);
+        user.setRoles(roles);
+        System.out.println(user);
+        return appService.updateUser(user) ? "redirect:/admin" : "edit";
     }
 
     @GetMapping("/{id}/delete")
