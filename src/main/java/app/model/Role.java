@@ -3,8 +3,10 @@ package app.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -17,9 +19,9 @@ public class Role implements GrantedAuthority {
     @Column
     private String role;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
-
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
+    private Set<User> users = new HashSet<>();
+ 
     public Role() {
     }
 

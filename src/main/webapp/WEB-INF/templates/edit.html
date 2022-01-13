@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Java Mentor</title>
@@ -16,13 +16,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a type="button" th:href="@{/}" class="btn btn-outline-light">Home</a></li>
-            </ul>
+                <li class="nav-item"><a type="button" th:href="@{/}" class="btn btn-outline-light">Home</a></li></ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <form th:method="POST" th:action="@{/admin/edit}" th:object="${user}">
+        <input type="hidden" th:field="*{id}" th:value="*{getId()}">
         <div class="form-row">
             <div class="col-md-6 mb-3">
                 <label for="first_name">First name</label>
@@ -45,14 +45,14 @@
         </div>
         <div class="form-row mb-3">
             <div class="col-md-6 mb-3">
-                <label for="roles">Roles</label>
+                <label for="roles">ROLES</label>
                 <div id="roles">
                     <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="admin_checkbox" text="ROLE_ADMIN"></label>
+                        <label class="form-check-label" for="admin_checkbox">ADMIN: &nbsp;</label>
                         <input class="form-check-input" type="checkbox" name="checkbox_admin" th:checked="${user.hasRole('ROLE_ADMIN')}" id="admin_checkbox" value="true">
                     </div>
                     <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="user_checkbox" text="ROLE_USER"></label>
+                        <label class="form-check-label" for="user_checkbox">USER: &nbsp;</label>
                         <input class="form-check-input" type="checkbox" name="checkbox_user" th:checked="${user.hasRole('ROLE_USER')}" id="user_checkbox" value="true">
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                 <label for="enabled_row">Enabled</label>
                 <div id="enabled_row">
                     <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="enabled">Is enabled</label>
+                        <label class="form-check-label" for="enabled">Is enabled: &nbsp;</label>
                         <input class="form-check-input" type="checkbox" name="checkbox_enabled" th:checked="*{isEnabled()}" id="enabled">
                     </div>
                 </div>

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -29,6 +30,26 @@ public class AdminController {
         return "admin";
     }
 
+    @GetMapping("/new")
+    public String getNewUserPage(Model model) {
+        model.addAttribute("user", new User());
+        return "edit";
+    }
+
+    @PostMapping("/new")
+    public String getUserPage(@ModelAttribute("user") User user, @RequestParam(defaultValue = "false") boolean checkbox_admin,
+                              @RequestParam(defaultValue = "false") boolean checkbox_user, @RequestParam(defaultValue = "false") boolean checkbox_enabled) {
+        Set<Role> roles = new HashSet<>();
+//        if (checkbox_admin) roles.add(new Role("ROLE_ADMIN"));
+//        if (checkbox_user) roles.add(new Role("ROLE_USER"));
+        if (checkbox_admin) roles.add(appService.findRoleByRole("ROLE_ADMIN"));
+        if (checkbox_user) roles.add(appService.findRoleByRole("ROLE_USER"));
+        user.setEnabled(checkbox_enabled);
+        user.setRoles(roles);
+        System.out.println(user);
+        return appService.saveUser(user) ? "redirect:/admin" : "edit";
+    }
+
     @GetMapping("/{id}/edit")
     public String editUserPage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", appService.findUser(id));
@@ -39,17 +60,22 @@ public class AdminController {
     public String updateUser(@ModelAttribute("user") User user, @RequestParam(defaultValue = "false") boolean checkbox_admin,
                              @RequestParam(defaultValue = "false") boolean checkbox_user, @RequestParam(defaultValue = "false") boolean checkbox_enabled) {
         Set<Role> roles = new HashSet<>();
-        if (checkbox_admin) {roles.add(new Role("ROLE_ADMIN"));}
-        if (checkbox_user) {roles.add(new Role("ROLE_USER"));}
+        if (checkbox_admin) roles.add(new Role("ROLE_ADMIN"));
+        if (checkbox_user) roles.add(new Role("ROLE_USER"));
         user.setEnabled(checkbox_enabled);
         user.setRoles(roles);
-        return appService.updateUser(user) ? "redirect:/admin" : "/home";
+        return appService.updateUser(user) ? "redirect:/admin" : "edit";
     }
 
     @GetMapping("/{id}/delete")
     public String deleteUser(@PathVariable("id") Long userId) {
         appService.deleteUser(userId);
         return "redirect:/admin";
+    }
+
+    @ModelAttribute("allRoles")
+    public List<Role> initializeRoles() {
+        return appService.findAllRoles();
     }
 
 }
