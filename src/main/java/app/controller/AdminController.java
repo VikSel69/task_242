@@ -40,8 +40,6 @@ public class AdminController {
     public String getUserPage(@ModelAttribute("user") User user, @RequestParam(defaultValue = "false") boolean checkbox_admin,
                               @RequestParam(defaultValue = "false") boolean checkbox_user, @RequestParam(defaultValue = "false") boolean checkbox_enabled) {
         Set<Role> roles = new HashSet<>();
-//        if (checkbox_admin) roles.add(new Role("ROLE_ADMIN"));
-//        if (checkbox_user) roles.add(new Role("ROLE_USER"));
         if (checkbox_admin) roles.add(appService.findRoleByRole("ROLE_ADMIN"));
         if (checkbox_user) roles.add(appService.findRoleByRole("ROLE_USER"));
         user.setEnabled(checkbox_enabled);
@@ -60,8 +58,8 @@ public class AdminController {
     public String updateUser(@ModelAttribute("user") User user, @RequestParam(defaultValue = "false") boolean checkbox_admin,
                              @RequestParam(defaultValue = "false") boolean checkbox_user, @RequestParam(defaultValue = "false") boolean checkbox_enabled) {
         Set<Role> roles = new HashSet<>();
-        if (checkbox_admin) roles.add(new Role("ROLE_ADMIN"));
-        if (checkbox_user) roles.add(new Role("ROLE_USER"));
+        if (checkbox_admin) roles.add(appService.findRoleByRole("ROLE_ADMIN"));
+        if (checkbox_user) roles.add(appService.findRoleByRole("ROLE_USER"));
         user.setEnabled(checkbox_enabled);
         user.setRoles(roles);
         return appService.updateUser(user) ? "redirect:/admin" : "edit";

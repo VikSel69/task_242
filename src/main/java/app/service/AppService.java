@@ -1,12 +1,9 @@
 package app.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.ui.Model;
 import app.model.Role;
 import app.model.User;
 
-import javax.security.auth.login.LoginException;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface AppService extends UserDetailsService {
@@ -19,8 +16,6 @@ public interface AppService extends UserDetailsService {
     List<Role> findAllRoles();
 
     Role findRoleByRole(String role);
-
-    void tryIndex(Model model, HttpSession session, LoginException authenticationException, String authenticationName);
 
     boolean saveUser(User user);
 

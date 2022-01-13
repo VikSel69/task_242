@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Java Mentor</title>
@@ -24,6 +24,14 @@
     </div>
 </nav>
 <div class="container">
+    <div  class="row">
+        <div class="col text-center">
+            <h1 class="mt-5">JM Spring Security</h1>
+            <p class="lead">Create/Edit user</p>
+        </div>
+    </div>
+</div>
+<div class="container">
     <div class="row p-3 mb-2 bg-dark text-white font-weight-bold">
         <div class="col">Full name</div>
         <div class="col">Email</div>
@@ -39,8 +47,8 @@
             <th:block th:each="role : ${user.roles}">&nbsp;<span th:text="${role.role}"></span></th:block>
         </div>
         <div class="col text-center">
-            <a type="button" th:href="@{/admin/{id}/edit(id=${user.id})}" class="btn btn-secondary" th:classappend="${rowStat.count % 2 == 0 ? 'bg-ligth text-dark' : 'bg-secondary text-white'}">Edit</a>
-            <a type="button" th:href="@{/admin/{id}/delete(id=${user.id})}" class="btn btn-secondary" th:classappend="${rowStat.count % 2 == 0 ? 'bg-ligth text-dark' : 'bg-secondary text-white'}">Delete</a>
+            <a type="button" th:href="@{/admin/{id}/edit(id=${user.id})}" class="btn btn-outline-light text-white" th:classappend="${rowStat.count % 2 == 0 ? 'bg-ligth' : 'bg-secondary'}">Edit</a>
+            <a type="button" th:href="@{/admin/{id}/delete(id=${user.id})}" class="btn btn-outline-light text-white" th:classappend="${rowStat.count % 2 == 0 ? 'bg-ligth' : 'bg-secondary'}">Delete</a>
         </div>
     </div>
 </div>

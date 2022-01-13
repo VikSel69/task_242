@@ -6,15 +6,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import app.model.Role;
 import app.model.User;
 import app.repository.RoleRepository;
 import app.repository.UserRepository;
 
 import javax.persistence.PersistenceException;
-import javax.security.auth.login.LoginException;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,29 +70,6 @@ public class AppServiceImpl implements AppService {
     @Override
     public Role findRoleByRole(String role) {
         return roleRepository.findRoleByRole(role);
-    }
-
-    @Override
-    public void tryIndex(Model model, HttpSession session, LoginException authenticationException, String authenticationName) {
-        if (authenticationException != null) {
-            try {
-                model.addAttribute("authenticationException", authenticationException);
-                session.removeAttribute("Authentication-Exception");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            model.addAttribute("authenticationException", new LoginException(null));
-        }
-
-        if (authenticationName != null) {
-            try {
-                model.addAttribute("authenticationName", authenticationName);
-                session.removeAttribute("Authentication-Name");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
